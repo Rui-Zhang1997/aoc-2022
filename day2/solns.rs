@@ -29,10 +29,6 @@ pub fn solution1(fp: &str) -> u32 {
             ('A', (3, 6, 0)),
             ('B', (0, 3, 6)),
             ('C', (6, 0, 3))]);
-    let hmap: HashMap<char, u32> = HashMap::from([
-        ('X', 1),
-        ('Y', 2),
-        ('Z', 3)]);
     let input = match readfile(fp) {
         Err(_) => {
             println!("file not found");
@@ -43,9 +39,9 @@ pub fn solution1(fp: &str) -> u32 {
     let parsed = parse_input(input);
     parsed.iter().fold(0, |acc, (op, me)| -> u32 {
         match me {
-            'X' => acc + hmap[me] + result_map[op].0,
-            'Y' => acc + hmap[me] + result_map[op].1,
-            'Z' => acc + hmap[me] + result_map[op].2,
+            'X' => acc + result_map[op].0 + 1,
+            'Y' => acc + result_map[op].1 + 2,
+            'Z' => acc + result_map[op].2 + 3,
             _ => acc,
         }
     })
