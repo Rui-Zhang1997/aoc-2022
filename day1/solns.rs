@@ -1,12 +1,15 @@
 use std::fs::File;
 use std::io::Result;
+use std::io::{ Error, ErrorKind };
 use std::io::prelude::*;
 
 fn readfile(fp: &str) -> Result<String> {
     let mut f = File::open(fp)?;
     let mut buf = String::new();
-    f.read_to_string(&mut buf);
-    Ok(buf)
+    match f.read_to_string(&mut buf) {
+        Err(_) => Err(Error::new(ErrorKind::NotFound, format!("file {} not found", fp))),
+        Ok(_) => Ok(buf)
+    }
 }
 
 fn parse_input(buf: String) -> Vec<Vec<u32>> {
@@ -27,14 +30,6 @@ fn parse_input(buf: String) -> Vec<Vec<u32>> {
     result
 }
 
-fn sum(v: &Vec<u32>) -> u32 {
-    let mut s = 0;
-    for i in 0..v.len() {
-        s += v[i];
-    }
-    s
-}
-
 pub fn solution(fp: &str) {
     let input = match readfile(fp) {
         Err(_) => {
@@ -45,8 +40,12 @@ pub fn solution(fp: &str) {
     };
     let parsed = parse_input(input);
     let mut sums = Vec::new();
-    for i in 0..parsed.len() {
-        sums.push(sum(&parsed[i]));
+    for vl in parsed.iter() {
+        let mut s = 0;
+        for v in vl.iter() {
+            s += v;
+        }
+        sums.push(s);
     }
     sums.sort();
     let sz = sums.len();
