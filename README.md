@@ -1,1 +1,1 @@
-Solutions to Advent of Code 2022
+My (terribly, unsightly, rage-inducing, disgusting, filthy, please see [synonyms](https://www.thesaurus.com/browse/disgusting)) solutions to Advent of Code 2022.
