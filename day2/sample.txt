@@ -1,0 +1,7 @@
+A Y
+A X
+B X
+A X
+A Y
+C Y
+C X
