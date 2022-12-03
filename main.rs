@@ -1,7 +1,7 @@
-mod day2;
+mod day3;
 
 fn main() {
-    let fp = "day2/input.txt";
-    println!("soln 1: {}", day2::solns::solution1(fp));
-    println!("soln 2: {}", day2::solns::solution2(fp));
+    let fp = "day3/input.txt";
+    println!("soln 1: {}", day3::solns::solution1(fp));
+//     println!("soln 2: {}", day3::solns::solution2(fp));
 }
