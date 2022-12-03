@@ -20,7 +20,7 @@ fn parse_file(fp: &str) -> Vec<String> {
     let input = match readfile(fp) {
         Err(_) => {
             println!("file not found");
-            return 0;
+            return vec![];
         }
         Ok(buf) => buf,
     };
