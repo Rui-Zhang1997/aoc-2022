@@ -1,20 +1,5 @@
 use std::collections::HashMap;
-use std::fs::File;
-use std::io::prelude::*;
-use std::io::Result;
-use std::io::{Error, ErrorKind};
-
-fn readfile(fp: &str) -> Result<String> {
-    let mut f = File::open(fp)?;
-    let mut buf = String::new();
-    match f.read_to_string(&mut buf) {
-        Err(_) => Err(Error::new(
-            ErrorKind::NotFound,
-            format!("file {} not found", fp),
-        )),
-        Ok(_) => Ok(buf),
-    }
-}
+use crate::utils::fs;
 
 fn parse_input(buf: String) -> Vec<(char, char)> {
     let parts = buf.split("\n");
@@ -29,14 +14,13 @@ pub fn solution1(fp: &str) -> u32 {
             ('A', (3, 6, 0)),
             ('B', (0, 3, 6)),
             ('C', (6, 0, 3))]);
-    let input = match readfile(fp) {
-        Err(_) => {
-            println!("file not found");
+    let parsed = match fs::parse_file(fp, parse_input) {
+        Err(e) => {
+            println!("{:?}", e);
             return 0;
         }
-        Ok(buf) => buf,
+        Ok(parsed) => parsed
     };
-    let parsed = parse_input(input);
     parsed.iter().fold(0, |acc, (op, me)| -> u32 {
         match me {
             'X' => acc + result_map[op].0 + 1,
@@ -53,14 +37,13 @@ pub fn solution2(fp: &str) -> u32 {
             ('A', (3, 1, 2)),
             ('B', (1, 2, 3)),
             ('C', (2, 3, 1))]);
-    let input = match readfile(fp) {
-        Err(_) => {
-            println!("file not found");
+    let parsed = match fs::parse_file(fp, parse_input) {
+        Err(e) => {
+            println!("{:?}", e);
             return 0;
         }
-        Ok(buf) => buf,
+        Ok(parsed) => parsed,
     };
-    let parsed = parse_input(input);
     parsed.iter().fold(0, |acc, (op, outcome)| -> u32 {
         match outcome {
             'X' => acc + outcome_matrix[op].0,
