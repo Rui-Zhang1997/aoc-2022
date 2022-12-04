@@ -2,16 +2,12 @@ use regex::Regex;
 use crate::utils::fs;
 
 fn parse_input(buf: String) -> Vec<(u32, u32, u32, u32)> {
-    let pattern = Regex::new(r"(\d+)-(\d+),(\d+)-(\d+)").unwrap();
-    let mut res = Vec::new();
-    for grp in pattern.captures_iter(&buf) {
-        res.push(
-            (grp[1].parse::<u32>().unwrap(),
-            grp[2].parse::<u32>().unwrap(),
-            grp[3].parse::<u32>().unwrap(),
-            grp[4].parse::<u32>().unwrap()));
-    }
-    res
+    let re = Regex::new(r"(\d+)-(\d+),(\d+)-(\d+)").unwrap();
+    re.captures_iter(&buf).map(|grp|
+        (grp[1].parse::<u32>().unwrap(),
+        grp[2].parse::<u32>().unwrap(),
+        grp[3].parse::<u32>().unwrap(),
+        grp[4].parse::<u32>().unwrap())).collect()
 }
 
 pub fn solution1(fp: &str) -> u32 {
